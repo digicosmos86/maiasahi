@@ -1,0 +1,14 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = '毎朝日'
+theme = "paper"
+
+[params]
+  # color style
+  color = 'linen'                           # linen, wheat, gray, light
+
+  # header social icons
+  twitter = 'paulxu_ccv'               # twitter.com/YOUR_TWITTER_ID
+  github = 'digicosmos86'                 # github.com/YOUR_GITHUB_ID
+  linkedin = 'paulxubc'             # linkedin.com/in/YOUR_LINKEDIN_ID
+  rss = true                                # show rss icon
