@@ -1,0 +1,3 @@
+[submodule "maiasahi/themes/paper"]
+	path = maiasahi/themes/paper
+	url = https://github.com/nanxiaobei/hugo-paper
