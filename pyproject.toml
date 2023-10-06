@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "maiasahi"
+version = "0.1.0"
+description = "Learn Japanese from daily news with LLM"
+authors = ["Paul Xu <digicosmos@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    { include = "maiasahi", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+beautifulsoup4 = "^4.12.2"
+Jinja2 = "^3.1.2"
+requests = "^2.31.0"
+openai = "^0.28.1"
+python-dotenv = "^1.0.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.292"
+black = "^23.9.1"
+pytest = "^7.4.2"
+
+[tool.poetry.scripts]
+add = "maiasahi:add_article"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

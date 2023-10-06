@@ -1,0 +1,68 @@
+name: Daily Build and Deploy
+
+on:
+  schedule:
+    - cron: '30 10 * * *'  # This corresponds to 6:30ET assuming the server timezone is UTC
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Set environment variable from secret
+      - name: Set OPENAI_API_KEY environment variable
+        env:
+          OPENAI_API_SECRET: ${{ secrets.OPENAI_API_KEY }}
+        run: echo "OPENAI_API_KEY=$OPENAI_API_SECRET" >> $GITHUB_ENV
+
+      # Step 2: Checkout repo recursively
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      # Step 3: Install Hugo, Python 3.11 and Poetry
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      # Step 4: Run poetry command
+      - name: Run poetry command
+        run: |
+          poetry install
+          poetry run add
+
+      # Step 5: Build the site and push to GitHub Pages
+      - name: Build Hugo Site
+        run: |
+          cd maiasahi
+          hugo --minify
+          cd ..
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./maiasahi/public
+
+      # Step 6: Add all files, commit, and push
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Automated update from GitHub Actions" || echo "No changes to commit"
+          git push
+
+          # Build job
