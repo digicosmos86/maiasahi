@@ -1,7 +1,6 @@
 name: Daily Build and Deploy
 
 on:
-  pull_request:
   schedule:
     - cron: '30 10 * * *'  # This corresponds to 6:30ET assuming the server timezone is UTC
 
