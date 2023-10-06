@@ -30,19 +30,19 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
 
-    #   - name: Set up Python 3.11
-    #     uses: actions/setup-python@v2
-    #     with:
-    #       python-version: 3.11
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
 
-    #   - name: Install Poetry
-    #     uses: snok/install-poetry@v1
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
 
-    #   # Step 4: Run poetry command
-    #   - name: Run poetry command
-    #     run: |
-    #       poetry install
-    #       poetry run add
+      # Step 4: Run poetry command
+      - name: Run poetry command
+        run: |
+          poetry install
+          poetry run add
 
       # Step 5: Build the site and push to GitHub Pages
       - name: Build Hugo Site
