@@ -177,7 +177,7 @@ def slug_with_chatgpt(title: str) -> str:
     """
     prompt = f"""{title} 
     
-    Translate the above sentence into English and convert the result to slug
+    Translate the above sentence into English and convert the result to slug. Return slug only.
     """
 
     completion = openai.ChatCompletion.create(
