@@ -175,16 +175,19 @@ def slug_with_chatgpt(title: str) -> str:
     title
         The title of the article.
     """
-    prompt = f"""{title} 
+    prompt = f"""{title}
     
-    Translate the above sentence into English and convert the result to slug. Return slug only.
+    Translate the above sentence from Japanese into English.
     """
 
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
     )
 
-    return completion.choices[0].message.content
+    translation = completion.choices[0].message.content
+    slug = sentence_to_slug(translation)
+
+    return slug
 
 
 def vocabulary_with_chatgpt(article: str) -> str:

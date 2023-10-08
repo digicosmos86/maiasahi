@@ -7,3 +7,5 @@ def test_chatgpt():
     slug = slug_with_chatgpt(title)
 
     assert slug.lower() == slug
+    assert "\n" not in slug
+    assert " " not in slug
