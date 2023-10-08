@@ -1,0 +1,95 @@
+---
+title: 「世界ふしぎ発見！」レギュラー放送終了へ　草野さん「天職だった」
+date: 2023-10-06
+slug: The regular broadcast of "Sekai Fushigi Hakken!" to come to an end. Mr. Kusano says, "It was my calling."
+
+result-to-slug: the-regular-broadcast-of-sekai-fushigi-hakken-to-come-to-an-end-mr-kusano-says-it-was-my-calling
+---
+
+![回答者から名答、珍答の理由を絶妙な話術で引き出す元司会の草野仁さん=2000年8月5日、東京都赤坂のTBS](https://www.asahicom.jp/imgopt/img/735f15acd9/comm_L/AS20231006003121.jpg "回答者から名答、珍答の理由を絶妙な話術で引き出す元司会の草野仁さん=2000年8月5日、東京都赤坂のTBS")
+
+[Link to the original article](https://asahi.com/articles/ASRB66QCCRB6UCVL02N.html?iref=comtop_7_04)
+
+
+{{< rawhtml >}}
+<div>
+
+<p>1. TBSは6日、<ruby>37<rt>さんじゅうなな</rt></ruby>年<ruby>半<rt>はん</rt></ruby>にわたって<ruby>続<rt>つづ</rt></ruby>いてきたクイズ<ruby>番組<rt>ばんぐみ</rt></ruby>「<ruby>日立世界<rt>ひたちせかい</rt></ruby>ふしぎ<ruby>発見<rt>はっけん</rt></ruby>！」のレギュラー<ruby>放送<rt>ほうそう</rt></ruby>を<ruby>来年<rt>らいねん</rt></ruby>3<ruby>月<rt>がつ</rt></ruby>で<ruby>終<rt>お</rt></ruby>了<ruby>する<rt>する</rt></ruby>と<ruby>発表<rt>はっぴょう</rt></ruby>した。4<ruby>月<rt>がつ</rt></ruby>いかんは<ruby>特番<rt>とくばん</rt></ruby>として<ruby>放送<rt>ほうそう</rt></ruby>する<ruby>予定<rt>よてい</rt></ruby>。<ruby>世界<rt>せかい</rt></ruby>の<ruby>不思議<rt>ふしぎ</rt></ruby>を<ruby>歴史<rt>れきし</rt></ruby>とともに<ruby>解<rt>と</rt></ruby>き<ruby>明<rt>あ</rt></ruby>かすクイズ<ruby>番組<rt>ばんぐみ</rt></ruby>で、1986<ruby>年<rt>ねん</rt></ruby>4<ruby>月<rt>がつ</rt></ruby>に<ruby>放送<rt>ほうそう</rt></ruby>を<ruby>開始<rt>かいし</rt></ruby>。<ruby>現在<rt>げんざい</rt></ruby>クイズマスターの<ruby>形<rt>かたち</rt></ruby>で<ruby>出演<rt>しゅつえん</rt></ruby>する<ruby>草野仁<rt>くさのじん</rt></ruby>さん（79）が、<ruby>今年<rt>ことし</rt></ruby>4<ruby>月<rt>がつ</rt></ruby>に<ruby>石井亮次<rt>いしいりょうじ</rt></ruby>さん（46）に<ruby>交代<rt>こうたい</rt></ruby>するまで<ruby>司会<rt>しかい</rt></ruby>を<ruby>務<rt>つと</rt></ruby>めていた。黒<ruby>柳徹子<rt>やなぎてつこ</rt></ruby>さんらレギュラー<ruby>出演<rt>しゅつえん</rt></ruby>者は、<ruby>特番<rt>とくばん</rt></ruby>も<ruby>出演<rt>しゅつえん</rt></ruby>する<ruby>予定<rt>よてい</rt></ruby>だという。</p>
+<p>2. 草野さんは「<ruby>最初<rt>さいしょ</rt></ruby>は<ruby>苦戦<rt>くせん</rt></ruby>の<ruby>連続<rt>れんぞく</rt></ruby>でした。<ruby>毎週<rt>まいしゅう</rt></ruby><ruby>芸能界<rt>げいのうかい</rt></ruby>の<ruby>第一線<rt>だいいっせん</rt></ruby>で<ruby>活躍<rt>かつやく</rt></ruby>されている<ruby>豪華<rt>ごうか</rt></ruby>な<ruby>方々<rt>かたがた</rt></ruby>を<ruby>ゲスト<rt>げすと</rt></ruby>にお<ruby>迎<rt>むか</rt></ruby>えして<ruby>番組<rt>ばんぐみ</rt></ruby>を<ruby>差配<rt>さばい</rt></ruby>していく<ruby>重圧<rt>じゅうあつ</rt></ruby>はとても<ruby>大<rt>おお</rt></ruby>きいものでした。<ruby>徐々<rt>じょじょ</rt></ruby>に<ruby>慣<rt>な</rt></ruby>れていき、ゲストの<ruby>皆様<rt>みなさま</rt></ruby>を<ruby>捌<rt>さば</rt></ruby>いていくことの<ruby>楽<rt>たの</rt></ruby>しみをおぼえるようになり、ついにはこの<ruby>仕事<rt>しごと</rt></ruby>が<ruby>天職<rt>てんしょく</rt></ruby>であったなと<ruby>思<rt>おも</rt></ruby>うようになりました」などとコメントを<ruby>寄<rt>よ</rt></ruby>せた。</p>
+<p>3. 番組<ruby>開始<rt>かいし</rt></ruby>時<ruby>から<rt>から</ruby><ruby>出演<rt>しゅつえん</rt></ruby>する<ruby>黒<rt>くろ</rt></ruby>柳徹子さん（90）は「<ruby>学校<rt>がっこう</rt></ruby><ruby>時代<rt>じだい</rt></ruby>、ちゃんと<ruby>勉強<rt>べんきょう</rt></ruby>してこなかった<ruby>歴史<rt>れきし</rt></ruby>が、<ruby>仕事<rt>しごと</rt></ruby>で<ruby>出来<rt>でき</rt></ruby>るんですから、こんなに<ruby>有難<rt>ありがた</rt></ruby>いことはありませんでした」、<ruby>石井<rt>いしい</rt></ruby>さんは「ここから<ruby>半年<rt>はんとし</rt></ruby>、さらに<ruby>気合<rt>きあい</rt></ruby>を<ruby>入<rt>い</rt></ruby>れて<ruby>臨<rt>のぞ</rt></ruby>みます！」などとコメントした。</p>
+
+</div>
+{{< /rawhtml >}}
+
+
+## Vocabulary
+
+| Word | JLPT Level | Part of Speech | Meaning |
+|------|------------|----------------|---------|
+| 続く (つづく) | N3 | verb (godan) | to continue |
+| 発表する (はっぴょうする) | N3 | verb (irregular) | to announce |
+| 終了する (しゅうりょうする) | N3 | verb (irregular) | to end |
+| 特番 (とくばん) | N3 | noun | special program |
+| 解き明かす (ときあかす) | N3 | verb (godan) | to solve/reveal |
+| 放送する (ほうそうする) | N3 | verb (irregular) | to broadcast |
+| 出演する (しゅつえんする) | N3 | verb (irregular) | to appear (on stage/screen) |
+| 司会を務める (しかいをつとめる) | N3 | verb phrase | to serve as a host |
+| 連続する (れんぞくする) | N3 | verb (irregular) | to occur consecutively |
+| 大きい (おおきい) | N4 | い-adjective | big |
+| 出来る (できる) | N4 | verb (ichidan) | can/do/make |
+| 見る (みる) | N4 | verb (ichidan) | to watch |
+| 言う (いう) | N4 | verb (godan) | to say |
+| 寄せる (よせる) | N4 | verb (ichidan) | to send |
+| 覚える (おぼえる) | N4 | verb (ichidan) | to remember |
+| 思う (おもう) | N4 | verb (godan) | to think |
+| 務める (つとめる) | N4 | verb (ichidan) | to serve |
+| 楽しむ (たのしむ) | N4 | verb (godan) | to enjoy |
+| 捌く (さばく) | N4 | verb (godan) | to deal with |
+| 入れる (いれる) | N4 | verb (ichidan) | to put in |
+| 集める (あつめる) | N4 | verb (ichidan) | to collect |
+| 横浜 (よこはま) | Proper Noun | noun | Yokohama (city in Japan) |
+| 重圧 (じゅうあつ) | N3 | noun | pressure |
+| 慣れる (なれる) | N4 | verb (ichidan) | to get used to |
+| 覚える (おぼえる) | N4 | verb (ichidan) | to remember |
+| 半年 (はんとし) | N4 | noun | half a year |
+| 入れる (いれる) | N4 | verb (ichidan) | to put in |
+| 気合 (きあい) | N4 | noun | fighting spirit |
+| 臨む (のぞむ) | N4 | verb (godan) | to face/approach |
+| 若手 (わかて) | N4 | noun | young person |
+| お年寄り (おとしより) | N4 | noun | elderly person |
+| 豪華 (ごうか) | N3 | な-adjective | gorgeous/amazing |
+
+## Grammar and Sentence Structure
+
+### Sentence 1:
+「最初は苦戦の連続でした。毎週芸能界の第一線で活躍されている豪華な方々をゲストにお迎えして番組を差配していく重圧はとてつもなく大きいものでした。
+
+1. Explain grammatical points: 
+   - 「苦戦の連続でした」: This phrase means "it was a series of struggles." The noun "連続" (series) is modified by the noun phrase "苦戦の" (of struggles).
+   - 「毎週芸能界の第一線で活躍されている豪華な方々をゲストにお迎えして番組を差配していく」:
+     - 「毎週芸能界の第一線で活躍されている豪華な方々」: This long noun phrase means "luxurious people who are active at the forefront of the entertainment world every week." The nouns "方々" (people) and "豪華な" (luxurious) modify the noun phrase "芸能界の第一線で活躍されている" (active at the forefront of the entertainment world). The verb "活躍されている" is in the passive form, indicating that these people are being active.
+     - 「ゲストにお迎えして番組を差配していく」: This phrase means "welcoming guests and managing the program." The verb phrase "ゲストにお迎えして" (welcoming guests) is connected to the verb phrase "番組を差配していく" (managing the program).
+
+2. Explain the structure of the sentence:
+   - This sentence is composed of two main clauses connected by the particle "でした" (was). The first clause is 「最初は苦戦の連続でした」 (It was a series of struggles at first), and the second clause is 「毎週芸能界の第一線で活躍されている豪華な方々をゲストにお迎えして番組を差配していく重圧はとてつもなく大きいものでした」 (The pressure of welcoming luxurious people who are active at the forefront of the entertainment world every week as guests and managing the program was incredibly big). 
+
+### Sentence 2:
+現在クイズマスターの形で出演する草野仁さん（79）が、今年4月に石井亮次さん（46）に交代するまで司会を務めていた。
+
+1. Explain grammatical points:
+   - 「現在クイズマスターの形で出演する」: This phrase means "currently appearing in the form of a quiz master." The noun "形" (form) is modified by the noun phrase "クイズマスターの" (of a quiz master). The verb phrase "出演する" (appear) is connected to the noun phrase "クイズマスターの形で" (in the form of a quiz master).
+   - 「今年4月に石井亮次さん（46）に交代するまで」: This phrase means "until April of this year when Ito Ryōji (46) took over." The noun "今年4月" (April of this year) is modified by the clause "石井亮次さん（46）に交代するまで" (until Ito Ryōji (46) took over). The verb phrase "交代する" (take over) is connected to the noun phrase "石井亮次さん（46）に" (to Ito Ryōji (46)).
+   - 「司会を務めていた」: This phrase means "had been serving as the host." The noun "司会" (host) is modified by the object marker を (marking "司会" as the object) and the verb phrase "務めていた" (had been serving).
+
+2. Explain the structure of the sentence:
+   - This sentence consists of two phrases connected by the particle が (indicating subject). The first phrase is 「現在クイズマスターの形で出演する草野仁さん（79）が」 (Kusano Jin-san (79), who is currently appearing in the form of a quiz master), and the second phrase is 「今年4月に石井亮次さん（46）に交代するまで司会を務めていた」 (had been serving as the host until Ito Ryōji (46) took over in April of this year).
+
+### Sentence 3:
+番組開始時から出演する黒柳徹子さん（90）は「学校時代、ちゃんと勉強してこなかった歴史が、仕事で出来るんですから、こんなにありがたいことはありませんでした」、石井さんは「ここから半年、さらに気合を入れて臨みます！」などとコメントした。
+
+1. Explain grammatical points: 
+   - 「ちゃんと勉強してこなかった歴史が、仕事で出来るんですから」: This phrase means "because I can do history, which I did not study properly, as a job." The noun "歴史" (history) is modified by the subject marker が (marking "歴史" as the subject) and the relative clause "ちゃんと勉強してこなかった" (that I did not study properly). The verb phrase "仕事で出来る" (do as a job) is connected to the noun phrase "歴史が" (history).
+   - 「さらに気合を入れて臨みます！」: This phrase means "I will prepare even harder!" The noun "気合" (determination) is modified by the object marker を (marking "気合" as the object) and the verb phrase "入れて臨みます" (will prepare/handle).
+
+2. Explain the structure of the sentence:
+   - This sentence consists of two main clauses connected by the particle は (indicating contrast). The first main clause is 「学校時代、ちゃんと勉強してこなかった歴史が、仕事で出来るんですから、こんなにありがたいことはありませんでした」 (Because I can do history, which I did not study properly in school, as a job, there is nothing more grateful than this), and the second main clause is 「石井さんはさらに気合を入れて臨みます！」 (Ito-san will prepare even harder!).

@@ -169,7 +169,7 @@ def extract_article_content(url: str) -> dict[str, str]:
     return result
 
 
-def annotate_with_chatgpt(article: str, retries: int = 3) -> str:
+def annotate_with_chatgpt(article: str) -> str:
     """Annotate pronunciation with ChatGPT.
 
     Parameters
@@ -182,13 +182,23 @@ def annotate_with_chatgpt(article: str, retries: int = 3) -> str:
         + "kanji with furigana in html <ruby> tags"
     )
     content = f"{article}\n\n{prompt}"
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo", messages=[{"role": "user", "content": content}]
+    )
+    return completion.choices[0].message.content
+
+
+def annotate_with_chatgpt_with_retry(article: str, retries: int = 3) -> str:
+    """Annotate pronunciation with ChatGPT.
+
+    Parameters
+    ----------
+    article
+        The content of the article.
+    """
 
     for _ in range(retries):
-        completion = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo", messages=[{"role": "user", "content": content}]
-        )
-        annotated_content = completion.choices[0].message.content
-
+        annotated_content = annotate_with_chatgpt(article)
         if "<ruby>" in annotated_content:
             return annotated_content
 
@@ -322,6 +332,7 @@ def add_article():
     logger.info("Furigana annotation with ChatGPT")
     annotated_content = annotate_with_chatgpt(article)
     logger.info("Successfully retrieved annotations from ChatGPT!")
+    logger.info("%s", annotated_content[:min(30, len(annotated_content))])
 
     paragraphs = re.split(r"\n+", annotated_content)
     html_content = "\n".join([f"<p>{paragraph}</p>" for paragraph in paragraphs])
