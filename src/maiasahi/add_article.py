@@ -22,6 +22,9 @@ logger.addHandler(console_handler)
 posts_path = Path(".") / "maiasahi" / "content" / "post"
 URL = "https://asahi.com"
 
+lower_limit = 200
+upper_limit = 1000
+
 
 def get_free_articles() -> list[str]:
     """
@@ -69,12 +72,36 @@ def extract_articles(urls: list[str]) -> dict[str, str]:
     -------
         _description_
     """
+    articles_over_length = []
+
     for url in urls:
         full_url = URL + url
 
         article_content = extract_article_content(full_url)
-        if len(article_content["article"]) < 500:
-            return article_content
+        article_length = len(article_content["article"])
+        if article_length < upper_limit:
+            if article_length > lower_limit:
+                return article_content
+            else:
+                continue
+
+        articles_over_length.append(article_content)
+
+    # If no articles has been found:
+    for article_content in articles_over_length:
+        article = article_content["article"]
+
+        paragraphs = re.split(r"\n+", article.strip())
+        para_idx = 0
+        length = 0
+
+        while length < upper_limit and para_idx < len(paragraphs):
+            length += len(paragraphs[para_idx])
+            para_idx += 1
+
+        article_content["article"] = "\n\n".join(paragraphs[:para_idx])
+
+        return article_content
 
     raise ValueError("Article not found!")
 
@@ -137,6 +164,7 @@ def extract_article_content(url: str) -> dict[str, str]:
         for p in p_tags[:-1]:  # Exclude the last p tag
             article_content.append(p.text)
         result["article"] = "\n\n".join(article_content).replace("\u3000", "")
+        result["article"] = re.sub(r"\n+", "\n\n", result["article"])
 
     return result
 
