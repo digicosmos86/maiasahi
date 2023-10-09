@@ -1,6 +1,7 @@
 name: Daily Build and Deploy
 
 on:
+  pull_request:
   schedule:
     - cron: '30 10 * * *'  # This corresponds to 6:30ET assuming the server timezone is UTC
 
@@ -20,6 +21,15 @@ jobs:
 
       # Step 2: Checkout repo recursively
       - name: Checkout repository
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Checkout repository
+        if: github.event_name == 'schedule'
         uses: actions/checkout@v3
         with:
           submodules: recursive
