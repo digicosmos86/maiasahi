@@ -179,12 +179,23 @@ def annotate_with_chatgpt(article: str) -> str:
     """
     prompt = (
         "For each of the above paragraphs, annotate the pronunciation of all "
-        + "kanji with furigana in html <ruby> tags"
+        + "kanji with furigana in html <ruby> tags for accessibility"
     )
     content = f"{article}\n\n{prompt}"
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", messages=[{"role": "user", "content": content}]
     )
+    response = completion.choices[0].message.content
+
+    if "<ruby>" in response:
+        return response
+
+    new_prompt = f"For each of the paragraphs below, convert the furigana in parentheses into HTML <ruby> tags for accessibility\n\n{response}"
+
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo", messages=[{"role": "user", "content": new_prompt}]
+    )
+
     return completion.choices[0].message.content
 
 
@@ -332,7 +343,7 @@ def add_article():
     logger.info("Furigana annotation with ChatGPT")
     annotated_content = annotate_with_chatgpt(article)
     logger.info("Successfully retrieved annotations from ChatGPT!")
-    logger.info("%s", annotated_content[:min(30, len(annotated_content))])
+    logger.info("%s", annotated_content[: min(30, len(annotated_content))])
 
     paragraphs = re.split(r"\n+", annotated_content)
     html_content = "\n".join([f"<p>{paragraph}</p>" for paragraph in paragraphs])
