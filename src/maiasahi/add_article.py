@@ -199,6 +199,32 @@ def annotate_with_chatgpt(article: str) -> str:
     return completion.choices[0].message.content
 
 
+def annotate_by_paragraph(article: str):
+    """Annotate with ChatGPT by paragraph
+
+    Parameters
+    ----------
+    article
+        The article with paragraph separated by "\n\n".
+    """
+    paragraphs = [p.strip() for p in article.split("\n\n")]
+    result = []
+
+    for paragraph in paragraphs:
+        prompt = "Add furigana annotation to all words and phrases within <ruby> and <rt> tags"
+
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": f"<p>{paragraph}</p>"},
+            ],
+        )
+        result.append(completion.choices[0].message.content)
+
+    return "\n\n".join(result)
+
+
 def annotate_with_chatgpt_with_retry(article: str, retries: int = 3) -> str:
     """Annotate pronunciation with ChatGPT.
 
@@ -341,12 +367,12 @@ def add_article():
     article = article_content["article"].replace("\u3000", "")
 
     logger.info("Furigana annotation with ChatGPT")
-    annotated_content = annotate_with_chatgpt(article)
+    annotated_content = annotate_by_paragraph(article)
     logger.info("Successfully retrieved annotations from ChatGPT!")
     logger.info("%s", annotated_content[: min(30, len(annotated_content))])
 
-    paragraphs = re.split(r"\n+", annotated_content)
-    html_content = "\n".join([f"<p>{paragraph}</p>" for paragraph in paragraphs])
+    # paragraphs = re.split(r"\n+", annotated_content)
+    # html_content = "\n".join([f"<p>{paragraph}</p>" for paragraph in paragraphs])
 
     slug = slug_with_chatgpt(article_content["title"])
 
@@ -359,7 +385,7 @@ def add_article():
     article_content["grammar"] = grammar_with_chatgpt(article)
     logger.info("Successfully retrieved grammar from ChatGPT!")
 
-    article_content["article"] = html_content
+    article_content["article"] = annotated_content
 
     today = datetime.today()
     formatted_date = today.strftime("%Y-%m-%d")

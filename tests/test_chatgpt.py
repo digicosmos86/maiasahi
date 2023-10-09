@@ -1,19 +1,10 @@
-from maiasahi.add_article import slug_with_chatgpt, annotate_with_chatgpt
+from maiasahi.add_article import (
+    annotate_by_paragraph,
+    slug_with_chatgpt,
+    annotate_with_chatgpt,
+)
 
-
-def test_chatgpt():
-    title = "「世界ふしぎ発見！」レギュラー放送終了へ　草野さん「天職だった」"
-
-    slug = slug_with_chatgpt(title)
-
-    assert slug.lower() == slug
-    assert "\n" not in slug
-    assert " " not in slug
-
-
-def test_pronunciation():
-    
-    article = """
+article = """
     ラグビーワールドカップ（W杯）の1次リーグD組で、日本は8日、アルゼンチンと対戦し、27―39で敗れた。通算成績は2勝2敗でD組3位となり、2大会連続の決勝トーナメント進出はならなかった。
 
     分かっちゃいるけど、止められない。そう表現するしかないほど、アルゼンチンの圧力は別格だった。勝負どころの接点で日本は負けた。タックルでラックでモールで、前進を許した。
@@ -29,5 +20,22 @@ def test_pronunciation():
     過去2度の4強入りを経験している相手に、ガチンコでぶつかった。悔しい敗戦の積み重ねが、日本ラグビーの歴史をつくる。「次に託したい」とFW稲垣。敗れはしたが、価値ある一戦だった。（ナント=松本龍三郎）
     """
 
+
+def test_chatgpt():
+    title = "「世界ふしぎ発見！」レギュラー放送終了へ　草野さん「天職だった」"
+
+    slug = slug_with_chatgpt(title)
+
+    assert slug.lower() == slug
+    assert "\n" not in slug
+    assert " " not in slug
+
+
+def test_pronunciation():
     annotated_content = annotate_with_chatgpt(article)
+    print(annotated_content)
+
+
+def test_annotate_by_paragraph():
+    annotated_content = annotate_by_paragraph(article)
     print(annotated_content)
