@@ -66,11 +66,11 @@ def extract_articles(urls: list[str]) -> dict[str, str]:
     Parameters
     ----------
     urls
-        _description_
+        A list of urls.
 
     Returns
     -------
-        _description_
+        A dict of contents extracted from the url.
     """
 
     for url in urls:
@@ -246,6 +246,46 @@ def slug_with_chatgpt(title: str) -> str:
     return slug
 
 
+import urllib.parse
+
+
+def markdown_table_linker(md_table):
+    # Split the table by lines
+    lines = md_table.strip().split("\n")
+
+    # For header and separator rows, keep as is.
+    new_lines = [lines[0], lines[1]]
+
+    for line in lines[2:]:
+        # Split the line into columns
+        cols = line.strip().split("|")
+
+        word = cols[1].strip()
+        rest = None
+
+        if "（" in word:
+            idx = word.index("（") + 1
+            word = word[:idx]
+            rest = word[idx:]
+        elif "(" in word:
+            idx = word.index("(") + 1
+            word = word[:idx]
+            rest = word[idx:]
+
+        # URL-encode the first column's content (which is usually the second element after split)
+        encoded_str = urllib.parse.quote_plus(word)
+        hyperlink = f"[{word}](https://jisho.org/search/{encoded_str})"
+
+        # Replace the first column's content with the hyperlink
+        cols[1] = hyperlink + (rest if rest else "")
+
+        # Re-join the columns and add to new_lines
+        new_lines.append("|".join(cols))
+
+    # Re-join the lines and return
+    return "\n".join(new_lines)
+
+
 def vocabulary_with_chatgpt(article: str) -> str:
     """Find a list of vocabulary in the article with ChatGPT.
 
@@ -273,7 +313,9 @@ def vocabulary_with_chatgpt(article: str) -> str:
         temperature=0.2,
     )
 
-    return completion.choices[0].message.content
+    result = completion.choices[0].message.content
+
+    return markdown_table_linker
 
 
 def grammar_with_chatgpt(article: str) -> str:
