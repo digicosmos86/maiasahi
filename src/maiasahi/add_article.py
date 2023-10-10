@@ -197,6 +197,7 @@ def annotate_by_paragraph(article: str):
                 {"role": "system", "content": prompt},
                 {"role": "user", "content": f"<p>{paragraph}</p>"},
             ],
+            temperature=0.2,
         )
         result.append(completion.choices[0].message.content)
 
@@ -234,7 +235,9 @@ def slug_with_chatgpt(title: str) -> str:
     """
 
     completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2,
     )
 
     translation = completion.choices[0].message.content
@@ -265,7 +268,9 @@ def vocabulary_with_chatgpt(article: str) -> str:
     4. Meaning: write in lower case.
     """
     completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2,
     )
 
     return completion.choices[0].message.content
@@ -294,7 +299,9 @@ def grammar_with_chatgpt(article: str) -> str:
     Organize the results in markdown
     """
     completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}]
+        model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2,
     )
 
     return completion.choices[0].message.content
