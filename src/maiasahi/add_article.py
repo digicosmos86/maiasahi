@@ -3,6 +3,7 @@ import logging
 import os
 from pathlib import Path
 import re
+import urllib.parse
 
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
@@ -246,10 +247,7 @@ def slug_with_chatgpt(title: str) -> str:
     return slug
 
 
-import urllib.parse
-
-
-def markdown_table_linker(md_table):
+def markdown_table_linker(md_table: str) -> str:
     # Split the table by lines
     lines = md_table.strip().split("\n")
 
@@ -264,20 +262,20 @@ def markdown_table_linker(md_table):
         rest = None
 
         if "（" in word:
-            idx = word.index("（") + 1
-            word = word[:idx]
-            rest = word[idx:]
+            idx = word.index("（")
+            rest = word[idx:].strip()
+            word = word[:idx].strip()
         elif "(" in word:
-            idx = word.index("(") + 1
-            word = word[:idx]
-            rest = word[idx:]
+            idx = word.index("(")
+            rest = word[idx:].strip()
+            word = word[:idx].strip()
 
         # URL-encode the first column's content (which is usually the second element after split)
         encoded_str = urllib.parse.quote_plus(word)
         hyperlink = f"[{word}](https://jisho.org/search/{encoded_str})"
 
         # Replace the first column's content with the hyperlink
-        cols[1] = hyperlink + (rest if rest else "")
+        cols[1] = hyperlink + (f" {rest}" if rest else "")
 
         # Re-join the columns and add to new_lines
         new_lines.append("|".join(cols))
@@ -315,7 +313,7 @@ def vocabulary_with_chatgpt(article: str) -> str:
 
     result = completion.choices[0].message.content
 
-    return markdown_table_linker
+    return markdown_table_linker(result)
 
 
 def grammar_with_chatgpt(article: str) -> str:
