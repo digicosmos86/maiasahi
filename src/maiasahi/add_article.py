@@ -190,7 +190,8 @@ def annotate_by_paragraph(article: str):
     result = []
 
     for paragraph in paragraphs:
-        prompt = "Add furigana annotation to all words and phrases within <ruby> and <rt> tags"
+        # prompt = "Add furigana annotation to all words and phrases within <ruby> and <rt> tags"
+        prompt = "Enclose all words and phrases in <ruby> tags with their furigana annotation in <rt> tags. Ignore parentheses in the original text"
 
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
