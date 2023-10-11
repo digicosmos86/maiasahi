@@ -2,6 +2,7 @@ from datetime import datetime
 import logging
 import os
 from pathlib import Path
+import random
 import re
 import urllib.parse
 
@@ -10,6 +11,8 @@ from dotenv import load_dotenv
 from jinja2 import Environment, PackageLoader
 import openai
 import requests
+
+from .asahi import sections, get_links
 
 load_dotenv()
 openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -43,9 +46,7 @@ def get_free_articles() -> list[str]:
     soup = BeautifulSoup(response.content, "html.parser")
 
     # Combine both types of divs into one list for scanning
-    div_elements = soup.find_all("div", class_="p-topNews__listItem") + soup.find_all(
-        "div", class_="p-topNews2__listItem"
-    )
+    div_elements = soup.find_all("div", class_="p-topNews__listItem")
 
     results = []
 
@@ -191,7 +192,10 @@ def annotate_by_paragraph(article: str):
 
     for paragraph in paragraphs:
         # prompt = "Add furigana annotation to all words and phrases within <ruby> and <rt> tags"
-        prompt = "Enclose all words and phrases in <ruby> tags with their furigana annotation in <rt> tags. Ignore parentheses in the original text"
+        prompt = (
+            "You are an app that annotates pronunciation of kanjis for Japanese learners."
+            + "Enclose all words and phrases in <ruby> tags with their furigana annotation in <rt> tags"
+        )
 
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -379,11 +383,20 @@ def add_article():
     free_article_urls = get_free_articles()
 
     if not free_article_urls:
-        raise ValueError("Cannot locate any free article!")
-
-    logger.info("Found %d free articles", len(free_article_urls))
-
-    article_content = extract_articles(free_article_urls)
+        logger.info("Did not find any free articles on the home page!")
+        logger.info("Looking for articles in subsections")
+        section = random.choice(sections)
+        url = get_links(section)
+        article_content = extract_article_content(url)
+    else:
+        logger.info("Found %d free articles", len(free_article_urls))
+        try:
+            article_content = extract_articles(free_article_urls)
+        except ValueError:
+            logger.info("Looking for articles in subsections")
+            section = random.choice(sections)
+            url = get_links(section) d
+            article_content = extract_article_content(url)
 
     logger.info(
         "Successfully extracted content of article with title %s",

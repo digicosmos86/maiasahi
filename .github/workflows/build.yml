@@ -1,0 +1,36 @@
+name: Daily Build and Deploy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        if: github.event_name == 'schedule'
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      # Step 3: Install Hugo, Python 3.11 and Poetry
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+
+      # Step 5: Build the site and push to GitHub Pages
+      - name: Build Hugo Site
+        run: |
+          cd maiasahi
+          hugo --minify
+          cd ..
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./maiasahi/public

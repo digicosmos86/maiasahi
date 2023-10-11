@@ -2,8 +2,9 @@ name: Daily Build and Deploy
 
 on:
   pull_request:
+  workflow_dispatch:
   schedule:
-    - cron: '30 10 * * *'  # This corresponds to 6:30ET assuming the server timezone is UTC
+    - cron: "30 10 * * *" # This corresponds to 6:30ET assuming the server timezone is UTC
 
 permissions:
   contents: write
@@ -29,7 +30,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Checkout repository
-        if: github.event_name == 'schedule'
+        if: github.event_name != 'pull_request'
         uses: actions/checkout@v3
         with:
           submodules: recursive
