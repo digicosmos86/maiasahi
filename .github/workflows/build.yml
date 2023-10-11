@@ -1,4 +1,4 @@
-name: Daily Build and Deploy
+name: Build site
 
 on:
   workflow_dispatch:
