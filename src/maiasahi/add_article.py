@@ -395,7 +395,7 @@ def add_article():
         except ValueError:
             logger.info("Looking for articles in subsections")
             section = random.choice(sections)
-            url = get_links(section) d
+            url = get_links(section)
             article_content = extract_article_content(url)
 
     logger.info(
