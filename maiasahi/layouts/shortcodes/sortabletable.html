@@ -1,0 +1,12 @@
+{{ $htmlTable := .Inner | markdownify }}
+{{ $id := .Get 0 | default "vocabularyTable" }}
+{{ $old := "<table>" }}
+{{ $new := printf "<table id=\"%s\">" $id }}
+{{ $htmlTable := replace $htmlTable $old $new }}
+{{ $old := "<th>Word" }}
+{{ $new := "<th onclick=\"sortTable(0)\">Word" }}
+{{ $htmlTable := replace $htmlTable $old $new }}
+{{ $old := "<th>JLPT" }}
+{{ $new := "<th onclick=\"sortTable(1)\">JLPT" }}
+{{ $htmlTable := replace $htmlTable $old $new }}
+{{ $htmlTable | safeHTML }}
