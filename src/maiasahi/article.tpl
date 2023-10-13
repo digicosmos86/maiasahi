@@ -20,9 +20,9 @@ slug: {{ slug }}
 
 ## Vocabulary
 
-{{ <sortabletable> }}
+{{< sortabletable >}}
 {{ vocabulary }}
-{{ </sortabletable> }}
+{{< /sortabletable >}}
 
 ## Grammar and Sentence Structure
 
