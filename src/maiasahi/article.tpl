@@ -20,7 +20,9 @@ slug: {{ slug }}
 
 ## Vocabulary
 
+{{ <sortabletable> }}
 {{ vocabulary }}
+{{ </sortabletable> }}
 
 ## Grammar and Sentence Structure
 
