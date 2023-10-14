@@ -10,7 +10,7 @@ client = texttospeech.TextToSpeechClient()
 
 # Select the type of audio file you want returned
 audio_config = texttospeech.AudioConfig(
-    audio_encoding=texttospeech.AudioEncoding.OGG_OPUS
+    audio_encoding=texttospeech.AudioEncoding.MP3
 )
 
 

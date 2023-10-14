@@ -4,7 +4,7 @@
 
 {{ range $index, $content := $splitContent }}
     {{ $insertedContent := printf `
-<span class="player" data-src="../../audio/%s/p%d.ogg">
+<span class="player" data-src="../../audio/%s/p%d.mp3">
     <button class="play-pause" onclick="togglePlayPause(this)">
         <i class="fas fa-play"></i>
         <!-- Font Awesome Play Icon -->
