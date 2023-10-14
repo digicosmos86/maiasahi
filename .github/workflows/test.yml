@@ -16,8 +16,9 @@ jobs:
       - name: Set OPENAI_API_KEY environment variable
         env:
           OPENAI_API_SECRET: ${{ secrets.OPENAI_API_KEY }}
-          GOOGLE_APPLICATION_CREDENTIALS: /tmp/credentials.json
+          GCP_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         run: |
+          echo $GCP_CREDENTIALS_JSON > /tmp/credentials.json
           echo "OPENAI_API_KEY=$OPENAI_API_SECRET" >> $GITHUB_ENV
           echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/credentials.json" >> $GITHUB_ENV
 
@@ -28,10 +29,6 @@ jobs:
           submodules: recursive
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
-
-      - name: Create Credential File
-        run: |
-          echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > /tmp/credentials.json
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v2
