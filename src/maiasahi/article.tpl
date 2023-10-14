@@ -20,9 +20,13 @@ slug: {{ slug }}
 
 ## Vocabulary
 
+{% raw %}
 {{< sortabletable >}}
+{% endraw %}
 {{ vocabulary }}
+{% raw %}
 {{< /sortabletable >}}
+{% endraw %}
 
 ## Grammar and Sentence Structure
 
