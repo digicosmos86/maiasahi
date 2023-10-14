@@ -8,15 +8,9 @@ slug: {{ slug }}
 
 [Link to the original article]({{ link }})
 
-{% raw %}
-{{< rawhtml >}}
-<div>
-{% endraw %}
+{% raw %}{{< rawhtml >}}{% endraw %}
 {{ article }}
-{% raw %}
-</div>
-{{< /rawhtml >}}
-{% endraw %}
+{% raw %}{{< /rawhtml >}}{% endraw %}
 
 ## Vocabulary
 

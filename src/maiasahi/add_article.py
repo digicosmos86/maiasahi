@@ -13,6 +13,7 @@ import openai
 import requests
 
 from .asahi import sections, get_links
+from .add_audio import add_audio_from_article
 
 load_dotenv()
 openai.api_key = os.environ["OPENAI_API_KEY"]
@@ -432,12 +433,15 @@ def add_article():
     article_content["date"] = formatted_date
     article_content["slug"] = slug
 
-    article = render(article_content)
+    article_md = render(article_content)
 
     logger.info("Saving article as a post...")
     post_path = posts_path / f"{formatted_date}.md"
 
     with open(post_path, "w", encoding="utf-8") as f:
-        f.write(article)
+        f.write(article_md)
 
     logger.info("Post successfully saved at %s", str(posts_path))
+
+    logger.info("Adding audio to article...")
+    add_audio_from_article(article, formatted_date)
