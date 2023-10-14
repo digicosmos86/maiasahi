@@ -1,2 +1,19 @@
-<!-- raw html -->
-{{.Inner}}
+{{ $inner := .Inner | replaceRE "\r\n" "\n" | safeHTML }}
+{{ $splitContent := split $inner "\n\n" }}
+{{ $date := .Page.Params.date.Format "2006-01-02" }}
+
+{{ range $index, $content := $splitContent }}
+    {{ $insertedContent := printf `
+<span class="player" data-src="../../audio/%s/p%d.ogg">
+    <button class="play-pause" onclick="togglePlayPause(this)">
+        <i class="fas fa-play"></i>
+        <!-- Font Awesome Play Icon -->
+    </button>
+</span>
+    ` $date $index }}
+    {{ if strings.Contains $content "<p>" }} 
+        {{ replace $content "<p>" (print "<p>" $insertedContent) | safeHTML }} 
+    {{ else }}
+        {{ $content }}
+    {{ end }}
+{{ end }}

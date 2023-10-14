@@ -1,4 +1,8 @@
 <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
   <div class="relative z-50 mr-auto flex items-center">
     <a
       class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
@@ -106,6 +110,33 @@
             switching = true;
           }
         }
+      }
+    }
+
+    function togglePlayPause(btn) {
+      let playerContainer = btn.closest(".player");
+      let audioSrc = playerContainer.getAttribute("data-src");
+
+      // Check if the audio element already exists
+      let audioElement = playerContainer.querySelector("audio");
+      let iconElement = btn.querySelector("i"); // Get the Font Awesome icon inside the button
+
+      // If audio element doesn't exist, create one
+      if (!audioElement) {
+        audioElement = new Audio(audioSrc);
+        playerContainer.appendChild(audioElement);
+
+        audioElement.addEventListener("ended", () => {
+          iconElement.className = "fas fa-play"; // Reset back to play icon when audio ends
+        });
+      }
+
+      if (audioElement.paused) {
+        audioElement.play();
+        iconElement.className = "fas fa-pause"; // Font Awesome Pause Icon
+      } else {
+        audioElement.pause();
+        iconElement.className = "fas fa-play"; // Font Awesome Play Icon
       }
     }
   </script>
