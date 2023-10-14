@@ -18,7 +18,10 @@ jobs:
       - name: Set OPENAI_API_KEY environment variable
         env:
           OPENAI_API_SECRET: ${{ secrets.OPENAI_API_KEY }}
-        run: echo "OPENAI_API_KEY=$OPENAI_API_SECRET" >> $GITHUB_ENV
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/credentials.json
+        run: |
+          echo "OPENAI_API_KEY=$OPENAI_API_SECRET" >> $GITHUB_ENV
+          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/credentials.json" >> $GITHUB_ENV
 
       # Step 2: Checkout repo recursively
       - name: Checkout repository
@@ -35,6 +38,10 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+
+      - name: Create Credential File
+        run: |
+          echo "$GOOGLE_APPLICATION_CREDENTIALS" | base64 -d > /tmp/credentials.json
 
       # Step 3: Install Hugo, Python 3.11 and Poetry
       - name: Setup Hugo
