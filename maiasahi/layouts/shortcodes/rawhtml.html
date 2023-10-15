@@ -3,7 +3,7 @@
 {{ $date := .Page.Params.date.Format "2006-01-02" }}
 
 {{ range $index, $content := $splitContent }}
-    {{ $insertedContent := printf `
+    {{ $playButton := printf `
 <span class="player" data-src="../../audio/%s/p%d.mp3">
     <button class="play-pause" onclick="togglePlayPause(this)">
         <i class="fas fa-play"></i>
@@ -11,9 +11,19 @@
     </button>
 </span>
     ` $date $index }}
+    {{ $rubyToggle := `
+    <label class="switch">
+        <input type="checkbox" class="toggleSwitch" checked>
+        <span class="slider"></span>
+    </label>
+    `}}
     {{ if strings.Contains $content "<p>" }} 
-        {{ replace $content "<p>" (print "<p>" $insertedContent) | safeHTML }} 
+        {{ $content = replace $content "<p>" (print "<p class>" $playButton) }} 
+    {{ end }}
+
+    {{ if strings.Contains $content "</p>" }} 
+        {{ replace $content "</p>" (print $rubyToggle "</p>") | safeHTML }} 
     {{ else }}
-        {{ $content }}
+        {{ $content | safeHTML }}
     {{ end }}
 {{ end }}

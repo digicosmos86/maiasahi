@@ -1,0 +1,51 @@
+p.hide-ruby rt {
+  display: none;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 35px; /* Adjusted width */
+  height: 20px; /* Adjusted height */
+  vertical-align: middle; /* Align with the text */
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--tw-prose-invert-links);
+  transition: 0.4s;
+  border: 1px solid var(--tw-prose-invert-td-borders);
+  border-radius: 20px; /* Rounded corners */
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px; /* Adjusted height */
+  width: 16px; /* Adjusted width */
+  left: 2px; /* Adjusted left */
+  bottom: 1px;
+  background-color: var(--tw-prose-invert-td-borders);
+  transition: 0.4s;
+  border-radius: 50%; /* Rounded shape */
+}
+
+input:checked + .slider {
+  background-color: var(--tw-prose-invert-td-borders);
+}
+
+input:checked + .slider:before {
+  background-color: var(--tw-prose-invert-links);
+  transform: translateX(14px); /* Adjusted translation */
+}
