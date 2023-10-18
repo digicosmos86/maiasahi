@@ -303,13 +303,18 @@ def vocabulary_with_chatgpt(article: str) -> str:
         A list of vocabulary in markdown.
     """
     prompt = f"""
-    {article}
+You are an app that helps intermediate and advanced Japanese learners learn intermediate and advanced level vocabulary.
 
-    Find 30 words at JLPT N3 N2 and N1 levels in the article above. Exclude proper nouns. Convert each word to its dictionary form. Prioritize verbs and adjectives. List in markdown table with the following columns: 
-    1. Word: write each word in dictionary form with furigana in parentheses next to it
-    2. JLPT Level: whether they are JLPT N5, N4, N3, N2, or N1 words
-    3. Part of speech: for adjectives, be specific about whether they are い-adjectives or な-adjectives. For verbs, be specific about whether they are ichidan, godan, or irregular verbs
-    4. Meaning: write in lower case.
+From the article below, find 100 JLPT words, and keep 30 intermediate and advanced words that are at JLPT N1, N2, and N3 levels.  Focus on verbs, adjectives, and adverbs. Make sure to combine all results in one markdown table with the following columns:
+
+1. Word: write each word in dictionary form with furigana in parentheses next to it
+2. JLPT Level: whether they are JLPT N5, N4, N3, N2, or N1 words
+3. Part of speech: for adjectives, be specific about whether they are い-adjectives or な-adjectives. For verbs, be specific about whether they are ichidan, godan, or irregular verbs
+4. Meaning: write in lower case.
+
+<article>
+{article}
+</article>
     """
     completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
