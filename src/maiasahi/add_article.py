@@ -6,11 +6,12 @@ import random
 import re
 import urllib.parse
 
+import openai
+import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from jinja2 import Environment, PackageLoader
-import openai
-import requests
+from retry import retry
 
 from .asahi import sections, get_links
 from .add_audio import add_audio_from_article
@@ -149,32 +150,21 @@ def extract_article_content(url: str) -> dict[str, str]:
 
     return result
 
-
-def annotate_with_chatgpt(article: str) -> str:
-    """Annotate pronunciation with ChatGPT.
-
-    Parameters
-    ----------
-    article
-        The content of the article.
-    """
+@retry(tries=5, delay=2)
+def paragraph_with_chatgpt(paragraph: str):
+    """Annotate a single paragraph with ChatGPT."""
     prompt = (
-        "For each of the above paragraphs, annotate the pronunciation of all "
-        + "kanji with furigana in html <ruby> tags for accessibility"
-    )
-    content = f"{article}\n\n{prompt}"
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", messages=[{"role": "user", "content": content}]
-    )
-    response = completion.choices[0].message.content
-
-    if "<ruby>" in response:
-        return response
-
-    new_prompt = f"For each of the paragraphs below, convert the furigana in parentheses into HTML <ruby> tags for accessibility\n\n{response}"
+            "You are an app that annotates pronunciation of kanjis for Japanese learners."
+            + "Enclose all words and phrases in <ruby> tags with their furigana annotation in <rt> tags"
+        )
 
     completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", messages=[{"role": "user", "content": new_prompt}]
+        model="gpt-3.5-turbo-1106",
+        messages=[
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": f"<p>{paragraph}</p>"},
+        ],
+        temperature=0.2,
     )
 
     return completion.choices[0].message.content
@@ -192,42 +182,12 @@ def annotate_by_paragraph(article: str):
     result = []
 
     for paragraph in paragraphs:
-        # prompt = "Add furigana annotation to all words and phrases within <ruby> and <rt> tags"
-        prompt = (
-            "You are an app that annotates pronunciation of kanjis for Japanese learners."
-            + "Enclose all words and phrases in <ruby> tags with their furigana annotation in <rt> tags"
-        )
-
-        completion = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": f"<p>{paragraph}</p>"},
-            ],
-            temperature=0.2,
-        )
-        result.append(completion.choices[0].message.content)
+        annotated_paragraph = paragraph_with_chatgpt(paragraph)
+        result.append(annotated_paragraph)
 
     return "\n\n".join(result)
 
-
-def annotate_with_chatgpt_with_retry(article: str, retries: int = 3) -> str:
-    """Annotate pronunciation with ChatGPT.
-
-    Parameters
-    ----------
-    article
-        The content of the article.
-    """
-
-    for _ in range(retries):
-        annotated_content = annotate_with_chatgpt(article)
-        if "<ruby>" in annotated_content:
-            return annotated_content
-
-    raise ValueError(f"ChatGPT returned no annotations after {retries} retries!")
-
-
+@retry(tries=5, delay=2)
 def slug_with_chatgpt(title: str) -> str:
     """Translates the title with ChatGPT and convert to a slug.
 
@@ -242,7 +202,7 @@ def slug_with_chatgpt(title: str) -> str:
     """
 
     completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-3.5-turbo-1106",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2,
     )
@@ -289,7 +249,7 @@ def markdown_table_linker(md_table: str) -> str:
     # Re-join the lines and return
     return "\n".join(new_lines)
 
-
+@retry(tries=5, delay=2)
 def vocabulary_with_chatgpt(article: str) -> str:
     """Find a list of vocabulary in the article with ChatGPT.
 
@@ -317,7 +277,7 @@ From the article below, find 100 JLPT words, and keep 30 intermediate and advanc
 </article>
     """
     completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-3.5-turbo-1106",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2,
     )
@@ -326,7 +286,7 @@ From the article below, find 100 JLPT words, and keep 30 intermediate and advanc
 
     return markdown_table_linker(result)
 
-
+@retry(tries=5, delay=2)
 def grammar_with_chatgpt(article: str) -> str:
     """Find a list of vocabulary in the article with ChatGPT.
 
@@ -350,7 +310,7 @@ def grammar_with_chatgpt(article: str) -> str:
     Organize the results in markdown
     """
     completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-3.5-turbo-1106",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2,
     )
