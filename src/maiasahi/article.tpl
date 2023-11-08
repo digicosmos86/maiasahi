@@ -25,3 +25,9 @@ slug: {{ slug }}
 ## Grammar and Sentence Structure
 
 {{ grammar }}
+
+## Quiz
+
+Test your comprehension of the article!
+
+{% raw %}{{< quiz >}}{% endraw %}

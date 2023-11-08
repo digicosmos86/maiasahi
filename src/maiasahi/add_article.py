@@ -1,23 +1,23 @@
 from datetime import datetime
+import json
 import logging
-import os
 from pathlib import Path
 import random
 import re
-import urllib.parse
 
-import openai
 import requests
 from bs4 import BeautifulSoup
-from dotenv import load_dotenv
 from jinja2 import Environment, PackageLoader
-from retry import retry
 
 from .asahi import sections, get_links
 from .add_audio import add_audio_from_article
-
-load_dotenv()
-openai.api_key = os.environ["OPENAI_API_KEY"]
+from .gpt import (
+    paragraph_with_chatgpt,
+    slug_with_chatgpt,
+    vocabulary_with_chatgpt,
+    grammar_with_chatgpt,
+    quiz_with_chatgpt,
+)
 
 logger = logging.getLogger("maiasahi")
 logger.setLevel(logging.INFO)
@@ -26,6 +26,7 @@ console_handler.setLevel(logging.INFO)
 logger.addHandler(console_handler)
 
 posts_path = Path(".") / "maiasahi" / "content" / "post"
+quiz_path = Path(".") / "maiasahi" / "content" / "quiz"
 URL = "https://asahi.com"
 
 lower_limit = 500
@@ -150,25 +151,6 @@ def extract_article_content(url: str) -> dict[str, str]:
 
     return result
 
-@retry(tries=5, delay=2)
-def paragraph_with_chatgpt(paragraph: str):
-    """Annotate a single paragraph with ChatGPT."""
-    prompt = (
-            "You are an app that annotates pronunciation of kanjis for Japanese learners."
-            + "Enclose all words and phrases in <ruby> tags with their furigana annotation in <rt> tags"
-        )
-
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-1106",
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": f"<p>{paragraph}</p>"},
-        ],
-        temperature=0.2,
-    )
-
-    return completion.choices[0].message.content
-
 
 def annotate_by_paragraph(article: str):
     """Annotate with ChatGPT by paragraph
@@ -187,136 +169,6 @@ def annotate_by_paragraph(article: str):
 
     return "\n\n".join(result)
 
-@retry(tries=5, delay=2)
-def slug_with_chatgpt(title: str) -> str:
-    """Translates the title with ChatGPT and convert to a slug.
-
-    Parameters
-    ----------
-    title
-        The title of the article.
-    """
-    prompt = f"""{title}
-    
-    Translate the above sentence from Japanese into English.
-    """
-
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-1106",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.2,
-    )
-
-    translation = completion.choices[0].message.content
-    slug = sentence_to_slug(translation)
-
-    return slug
-
-
-def markdown_table_linker(md_table: str) -> str:
-    # Split the table by lines
-    lines = md_table.strip().split("\n")
-
-    # For header and separator rows, keep as is.
-    new_lines = [lines[0], lines[1]]
-
-    for line in lines[2:]:
-        # Split the line into columns
-        cols = line.strip().split("|")
-
-        word = cols[1].strip()
-        rest = None
-
-        if "（" in word:
-            idx = word.index("（")
-            rest = word[idx:].strip()
-            word = word[:idx].strip()
-        elif "(" in word:
-            idx = word.index("(")
-            rest = word[idx:].strip()
-            word = word[:idx].strip()
-
-        # URL-encode the first column's content (which is usually the second element after split)
-        encoded_str = urllib.parse.quote_plus(word)
-        hyperlink = f"[{word}](https://jisho.org/search/{encoded_str})"
-
-        # Replace the first column's content with the hyperlink
-        cols[1] = hyperlink + (f" {rest}" if rest else "")
-
-        # Re-join the columns and add to new_lines
-        new_lines.append("|".join(cols))
-
-    # Re-join the lines and return
-    return "\n".join(new_lines)
-
-@retry(tries=5, delay=2)
-def vocabulary_with_chatgpt(article: str) -> str:
-    """Find a list of vocabulary in the article with ChatGPT.
-
-    Parameters
-    ----------
-    article
-        The article in string form
-
-    Returns
-    -------
-        A list of vocabulary in markdown.
-    """
-    prompt = f"""
-You are an app that helps intermediate and advanced Japanese learners learn intermediate and advanced level vocabulary.
-
-From the article below, find 100 JLPT words, and keep 30 intermediate and advanced words that are at JLPT N1, N2, and N3 levels.  Focus on verbs, adjectives, and adverbs. Make sure to combine all results in one markdown table with the following columns:
-
-1. Word: write each word in dictionary form with furigana in parentheses next to it
-2. JLPT Level: whether they are JLPT N5, N4, N3, N2, or N1 words
-3. Part of speech: for adjectives, be specific about whether they are い-adjectives or な-adjectives. For verbs, be specific about whether they are ichidan, godan, or irregular verbs
-4. Meaning: write in lower case.
-
-<article>
-{article}
-</article>
-    """
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-1106",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.2,
-    )
-
-    result = completion.choices[0].message.content
-
-    return markdown_table_linker(result)
-
-@retry(tries=5, delay=2)
-def grammar_with_chatgpt(article: str) -> str:
-    """Find a list of vocabulary in the article with ChatGPT.
-
-    Parameters
-    ----------
-    article
-        The article in string form
-
-    Returns
-    -------
-        Explanation of a complex sentence in markdown.
-    """
-    prompt = f"""
-    {article}
-
-    In the above article, select 3 sentences that are difficult to understand. For each sentence, do the following:
-
-    1. explain grammatical points
-    2. explain the structure of the sentence
-
-    Organize the results in markdown
-    """
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo-1106",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.2,
-    )
-
-    return completion.choices[0].message.content
-
 
 def render(content: dict[str, str]) -> str:
     """Renders the jinja template with content.
@@ -333,16 +185,6 @@ def render(content: dict[str, str]) -> str:
     env = Environment(loader=PackageLoader("maiasahi", "."))
     template = env.get_template("article.tpl")
     return template.render(content)
-
-
-def sentence_to_slug(title):
-    # Convert to lowercase
-    title = title.lower()
-
-    # Remove any special characters or punctuation, and replace spaces with hyphens
-    slug = re.sub(r"[^a-z0-9]+", "-", title).strip("-")
-
-    return slug
 
 
 def add_article():
@@ -376,9 +218,6 @@ def add_article():
     logger.info("Successfully retrieved annotations from ChatGPT!")
     logger.info("%s", annotated_content[: min(30, len(annotated_content))])
 
-    # paragraphs = re.split(r"\n+", annotated_content)
-    # html_content = "\n".join([f"<p>{paragraph}</p>" for paragraph in paragraphs])
-
     slug = slug_with_chatgpt(article_content["title"])
 
     logger.info("Successfully retrieved slugs!")
@@ -390,6 +229,9 @@ def add_article():
     article_content["grammar"] = grammar_with_chatgpt(article)
     logger.info("Successfully retrieved grammar from ChatGPT!")
 
+    quiz = quiz_with_chatgpt(article)
+    logger.info("Successfully retrieved quiz from ChatGPT!")
+
     article_content["article"] = annotated_content
 
     today = datetime.today()
@@ -397,6 +239,9 @@ def add_article():
 
     article_content["date"] = formatted_date
     article_content["slug"] = slug
+    with open(quiz_path / f"{formatted_date}.json", "w", encoding="utf-8") as f:
+        logger.info("Saving quiz as a json file...")
+        json.dump(quiz, f, ensure_ascii=False, indent=2)
 
     article_md = render(article_content)
 

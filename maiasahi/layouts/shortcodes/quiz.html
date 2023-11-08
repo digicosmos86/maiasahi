@@ -1,0 +1,29 @@
+<!-- layouts/shortcodes/quiz.html -->
+<div x-data="quizApp()" x-init="startQuiz()" id="quiz" data="../../quiz/{{ .Page.Date.Format "2006-01-02" }}.json">
+  <template x-for="(question, questionIndex) in questions" :key="questionIndex">
+    <div>
+      <h4 x-text="`${questionIndex + 1}. ${question.question}`"></h4>
+      <div class="options">
+        <template x-for="(option, optionIndex) in question.options" :key="optionIndex">
+          <label :class="{ 
+              'correct': submitted && optionIndex === question.answer, 
+              'incorrect': submitted && optionIndex === question.selected && optionIndex !== question.answer 
+            }">
+            <input type="radio" :name="'question' + questionIndex" x-model.number="question.selected" :value="optionIndex" :disabled="submitted">
+            <span x-text="option"></span>
+          </label>
+        </template>
+      </div>
+      <!-- Display a message and explanation after submission -->
+      <div x-show="submitted" class="answer-feedback">
+        <span x-text="`Correct answer: ${question.options[question.answer]}`"></span>
+        <span x-show="question.selected !== null" x-text="question.selected === question.answer ? ' - You got it right!' : ' - You got it wrong.'"></span>
+        <!-- Display the explanation -->
+        <div x-show="submitted" x-html="question.explanation"></div>
+      </div>
+    </div>
+  </template>
+  <button @click="showResults" x-show="!submitted">Submit</button>
+  <button @click="resetQuiz" x-show="submitted">Reset</button>
+  <h4 x-show="submitted" x-text="'You scored ' + score + ' out of ' + questions.length"></h4>
+</div>
