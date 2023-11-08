@@ -49,3 +49,20 @@ input:checked + .slider:before {
   background-color: var(--tw-prose-invert-links);
   transform: translateX(14px); /* Adjusted translation */
 }
+
+.correct {
+  background-color: lightgreen;
+}
+
+.incorrect {
+  background-color: lightcoral;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.options label {
+  margin-left: 1rem;
+  display: block;
+}
