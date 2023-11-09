@@ -227,3 +227,47 @@ Here's the article:
 
 現在、生成AIを巡っては、主要7カ国（G7）の国際ルール作りを目指す「広島AIプロセス」の年内の策定に向けて議論が進んでいる。10月30日には、生成AIの開発者を対象にした「行動規範」をG7で合意。生成AIのリスクを特定し、適切な対応を実施することが盛り込まれており、リスクとして偽情報の助長やプライバシー侵害などがあげられている。（明楽麻子）
 ```
+
+### Vocabulary from text
+
+You can also ask ChatGPT to extract vocabulary from an article.
+
+```
+You are an app that helps intermediate and advanced Japanese learners learn intermediate and advanced level vocabulary.
+
+From the article below, find 30 intermediate and advanced words that are at JLPT N1, N2, and N3 levels.  Focus on verbs, adjectives, and adverbs. Make sure to combine all results in one markdown table with the following columns:
+
+1. Word: write each word in dictionary form with furigana in parentheses next to it
+2. JLPT Level: whether they are JLPT N5, N4, N3, N2, or N1 words
+3. Part of speech: for adjectives, be specific about whether they are い-adjectives or な-adjectives. For verbs, be specific about whether they are ichidan, godan, or irregular verbs
+4. Meaning: write in lower case.
+
+<article>
+岸田文雄首相の声と画像を使ってひわいな発言をしたように見せかけた偽動画が、日本テレビのニュース番組のロゴを使って編集され、X（旧ツイッター）などSNS上で拡散されている。日テレは動画について「フェイク動画」だとして注意を呼びかけている。
+
+偽動画は生成AIを利用して作られたものと見られ、スーツ姿の岸田氏が、カメラに向かって語りかけている様子が収められている。さらに、日テレの「日テレNEWS24」のロゴを使い、ニュース番組で中継されているように装っている。同社は番組を通じて「放送、番組ロゴをフェイク動画に悪用されたことは到底許すことはできない」と注意を呼びかけた。
+
+現在、生成AIを巡っては、主要7カ国（G7）の国際ルール作りを目指す「広島AIプロセス」の年内の策定に向けて議論が進んでいる。10月30日には、生成AIの開発者を対象にした「行動規範」をG7で合意。生成AIのリスクを特定し、適切な対応を実施することが盛り込まれており、リスクとして偽情報の助長やプライバシー侵害などがあげられている。（明楽麻子）
+</article>
+```
+
+### Grammar and structure from article
+
+Likewise, you can ask ChatGPT to extract difficult sentences from the text and explain the grammatical points and usage.
+
+```
+You are an app that helps intermediate and advanced Japanese learners learn intermediate and advanced level grammar.
+
+<article>
+岸田文雄首相の声と画像を使ってひわいな発言をしたように見せかけた偽動画が、日本テレビのニュース番組のロゴを使って編集され、X（旧ツイッター）などSNS上で拡散されている。日テレは動画について「フェイク動画」だとして注意を呼びかけている。
+
+偽動画は生成AIを利用して作られたものと見られ、スーツ姿の岸田氏が、カメラに向かって語りかけている様子が収められている。さらに、日テレの「日テレNEWS24」のロゴを使い、ニュース番組で中継されているように装っている。同社は番組を通じて「放送、番組ロゴをフェイク動画に悪用されたことは到底許すことはできない」と注意を呼びかけた。
+
+現在、生成AIを巡っては、主要7カ国（G7）の国際ルール作りを目指す「広島AIプロセス」の年内の策定に向けて議論が進んでいる。10月30日には、生成AIの開発者を対象にした「行動規範」をG7で合意。生成AIのリスクを特定し、適切な対応を実施することが盛り込まれており、リスクとして偽情報の助長やプライバシー侵害などがあげられている。（明楽麻子）
+</article>
+
+In the above article, select 3 sentences that are difficult to understand. For each sentence, do the following:
+
+1. explain grammatical points
+2. explain the structure of the sentence
+```
