@@ -167,7 +167,7 @@ def grammar_with_chatgpt(article: str) -> str:
     1. explain grammatical points
     2. explain the structure of the sentence
 
-    Organize the results in markdown
+    Your response should be the markdown only. Do not put it in a code block.
     """
     completion = openai.ChatCompletion.create(
         model=MODEL,
@@ -207,7 +207,7 @@ I want the quiz as an array of JSON objects with the following field:
 3. answer: the index of the correct answer in the options array
 4. explanation, which is an explanation of the correct answer.
 
-Give me nothing but this JSON array.
+Your response should be nothing but the array. Do not format your answer in Markdown.
 """
     completion = openai.ChatCompletion.create(
         model=MODEL,
