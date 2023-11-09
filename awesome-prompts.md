@@ -211,24 +211,7 @@ To see this on your computer, either paste the HTML in an app that supports Mark
 
 Try this with LLMs. This shows how ChatGPT is much better than any other LLM in this aspect.
 
-### 2. Reading comprehension quizzes
-
-You can also ask ChatGPT to develop a quiz that tests your comprehension of the text. You can even do the quiz interactively with ChatGPT:
-
-```
-You are Japanese tutor teaching intermediate level adult students. You are designing a quiz to test my reading comprehension of Japanese articles. The quiz has 5 questions based on an article below. The questions should test the comprehension of the article. Each question should have 1 correct answer and 3 incorrect answers. The incorrect answers cannot be too obviously wrong. One good examples for the question are:  この記事で語られている事件の詳細は何ですか ?However, you cannot use the same question in the example.
-
-Now, ask me these questions, one after another. Prompt me to answer the question. After I answer, tell me whether I did right or wrong and why, and move on to the next question.
-
-Here's the article:
-岸田文雄首相の声と画像を使ってひわいな発言をしたように見せかけた偽動画が、日本テレビのニュース番組のロゴを使って編集され、X（旧ツイッター）などSNS上で拡散されている。日テレは動画について「フェイク動画」だとして注意を呼びかけている。
-
-偽動画は生成AIを利用して作られたものと見られ、スーツ姿の岸田氏が、カメラに向かって語りかけている様子が収められている。さらに、日テレの「日テレNEWS24」のロゴを使い、ニュース番組で中継されているように装っている。同社は番組を通じて「放送、番組ロゴをフェイク動画に悪用されたことは到底許すことはできない」と注意を呼びかけた。
-
-現在、生成AIを巡っては、主要7カ国（G7）の国際ルール作りを目指す「広島AIプロセス」の年内の策定に向けて議論が進んでいる。10月30日には、生成AIの開発者を対象にした「行動規範」をG7で合意。生成AIのリスクを特定し、適切な対応を実施することが盛り込まれており、リスクとして偽情報の助長やプライバシー侵害などがあげられている。（明楽麻子）
-```
-
-### Vocabulary from text
+### 2. Vocabulary from text
 
 You can also ask ChatGPT to extract vocabulary from an article.
 
@@ -251,7 +234,7 @@ From the article below, find 30 intermediate and advanced words that are at JLPT
 </article>
 ```
 
-### Grammar and structure from article
+### 3. Grammar and structure from article
 
 Likewise, you can ask ChatGPT to extract difficult sentences from the text and explain the grammatical points and usage.
 
@@ -270,4 +253,21 @@ In the above article, select 3 sentences that are difficult to understand. For e
 
 1. explain grammatical points
 2. explain the structure of the sentence
+```
+
+### 4. Reading comprehension quizzes
+
+You can also ask ChatGPT to develop a quiz that tests your comprehension of the text. You can even do the quiz interactively with ChatGPT:
+
+```
+You are Japanese tutor teaching intermediate level adult students. You are designing a quiz to test my reading comprehension of Japanese articles. The quiz has 5 questions based on an article below. The questions should test the comprehension of the article. Each question should have 1 correct answer and 3 incorrect answers. The incorrect answers cannot be too obviously wrong. One good examples for the question are:  この記事で語られている事件の詳細は何ですか ?However, you cannot use the same question in the example.
+
+Now, ask me these questions, one after another. Prompt me to answer the question. After I answer, tell me whether I did right or wrong and why, and move on to the next question.
+
+Here's the article:
+岸田文雄首相の声と画像を使ってひわいな発言をしたように見せかけた偽動画が、日本テレビのニュース番組のロゴを使って編集され、X（旧ツイッター）などSNS上で拡散されている。日テレは動画について「フェイク動画」だとして注意を呼びかけている。
+
+偽動画は生成AIを利用して作られたものと見られ、スーツ姿の岸田氏が、カメラに向かって語りかけている様子が収められている。さらに、日テレの「日テレNEWS24」のロゴを使い、ニュース番組で中継されているように装っている。同社は番組を通じて「放送、番組ロゴをフェイク動画に悪用されたことは到底許すことはできない」と注意を呼びかけた。
+
+現在、生成AIを巡っては、主要7カ国（G7）の国際ルール作りを目指す「広島AIプロセス」の年内の策定に向けて議論が進んでいる。10月30日には、生成AIの開発者を対象にした「行動規範」をG7で合意。生成AIのリスクを特定し、適切な対応を実施することが盛り込まれており、リスクとして偽情報の助長やプライバシー侵害などがあげられている。（明楽麻子）
 ```
