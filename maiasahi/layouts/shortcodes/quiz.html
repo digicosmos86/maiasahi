@@ -23,7 +23,7 @@
       </div>
     </div>
   </template>
-  <button @click="showResults" x-show="!submitted">Submit</button>
-  <button @click="resetQuiz" x-show="submitted">Reset</button>
+  <button @click="showResults" x-show="!submitted" class="btn" style="margin-top: 2rem;">Submit</button>
+  <button @click="resetQuiz" x-show="submitted" class="btn" style="margin-top: 2rem;">Reset</button>
   <h4 x-show="submitted" x-text="'You scored ' + score + ' out of ' + questions.length"></h4>
 </div>
