@@ -211,6 +211,25 @@ To see this on your computer, either paste the HTML in an app that supports Mark
 
 Try this with LLMs. This shows how ChatGPT is much better than any other LLM in this aspect.
 
+#### **Few-shot Learning**
+
+This does not always work (well), so sometimes giving the model an example of the output you need can be helpful.
+
+```
+You are an app that annotates pronunciation of kanjis for Japanese learners. Enclose all Kanji words and phrases in <ruby> tags with their furigana annotation in <rt> tags.
+
+For this sentence,
+インターネットいんたーねっと空間くうかんにおけるプライバシーぷらいばしーのあり方ありかたについて考かんがえる超党派ちょうとうはの議員連盟ぎいんれんめいが2日にち、国会こっかい内で初会合しょかいごうを開ひらいた。
+
+Your response should be
+<ruby>インターネット<rt>Internet</rt></ruby><ruby>空間<rt>くうかん</rt></ruby>における<ruby>プライバシー<rt>privacy</rt></ruby>のあり<ruby>方<rt>かた</rt></ruby>について<ruby>考<rt>かんが</rt></ruby>える<ruby>超党派<rt>ちょうとうは</rt></ruby>の<ruby>議員連盟<rt>ぎいんれんめい</rt></ruby>が2<ruby>日<rt>にち</rt></ruby>、<ruby>国会内<rt>こっかいない</rt></ruby>で<ruby>初会合<rt>しょかいごう</rt></ruby>を<ruby>開<rt>ひら</rt></ruby>いた。
+
+Now annotate this sentence:
+<p>
+「ネットしゃかい社会しゃかいにおけるプライバシーぷらいばしーの在あり方かたを考かんがえる議員ぎいん連盟れんめい」の初しょ会合かいごうには与野党よやとうから約やく40人にんが参加さんか。議連ぎれん会長かいちょうの小泉進次郎こいずみしんじろう元もと環境かんきょう相しょうは「正当せいとうな批判ひはんとプライバシーぷらいばしー（の侵害しんがい）が混在こんざいしている」と挨拶あいさつし、一定いっていの規制きせいが必要ひつようとの見解けんかいを示しめした。規制きせいによっては憲法けんぽうが保障ほしょうする表現ひょうげんの自由じゆうが侵おかされる可能性かのうせいもあり、参加さんか者には規制きせいに慎重しんちょうな意見いけんがある。
+</p>
+```
+
 ### 2. Vocabulary from text
 
 You can also ask ChatGPT to extract vocabulary from an article.
