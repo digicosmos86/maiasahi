@@ -30,7 +30,7 @@ I am traveling to Japan in a week. What are some of the expressions that might b
 Create a Japanese–English vocabulary list on the theme of cooking.
 ```
 
-![Waku waku](https://media.tenor.com/jiRSjXlEuF0AAAAd/waku-waku-excited.gif | width=200)
+<img src="https://media.tenor.com/jiRSjXlEuF0AAAAd/waku-waku-excited.gif" alt="Waku waku" width=200 height=200>
 
 ```
 List words in Japanese like "ワクワク".
