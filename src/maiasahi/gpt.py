@@ -16,16 +16,17 @@ MODEL = "gpt-3.5-turbo-1106"
 @retry(tries=5, delay=2)
 def paragraph_with_chatgpt(paragraph: str):
     """Annotate a single paragraph with ChatGPT."""
-    prompt = (
-        "You are an app that annotates pronunciation of kanjis for Japanese learners."
-        + "Enclose all words and phrases in <ruby> tags with their furigana annotation in <rt> tags"
-    )
+    system = """You are an app that annotates furigana using <ruby> and <rt> tags. For example, if the paragraph is <p>ビートルズの「最後の曲」とされる「ナウ・アンド・ゼン」が日本時間2日午後11時にデジタル配信で発売された。</p>
+
+ Then the response should be <p><ruby>ビートルズ<rt>びーとるず</rt></ruby>の「<ruby>最後<rt>さいご</rt></ruby>の<ruby>曲<rt>きょく</rt></ruby>」とされる「<ruby>ナウ・アンド・ゼン<rt>なう・あんど・ぜん</rt></ruby>」が<ruby>日本<rt>にほん</rt></ruby><ruby>時間<rt>じかん</rt></ruby>2<ruby>日<rt>にち</rt></ruby><ruby>午後<rt>ごご</rt></ruby>11<ruby>時<rt>じ</rt></ruby>に<ruby>デジタル<rt>でじたる</rt></ruby><ruby>配信<rt>はいしん</rt></ruby>で<ruby>発売<rt>はつばい</rt></ruby>された。</p>"""
+
+    prompt = f"Now annotate this paragraph: <p>{paragraph}</p>. Your response should be HTML with matching <ruby> and <rt> tags for all words and phrases."
 
     completion = openai.ChatCompletion.create(
         model=MODEL,
         messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": f"<p>{paragraph}</p>"},
+            {"role": "system", "content": system},
+            {"role": "user", "content": prompt},
         ],
         temperature=0.2,
     )
