@@ -1,0 +1,57 @@
+[
+  {
+    "question": "この記事で語られている企業の名前は何ですか？",
+    "options": [
+      "A.L.I.Technologies",
+      "NextGen Innovations",
+      "TechForward Solutions",
+      "InnoTech Dynamics"
+    ],
+    "answer": 0,
+    "explanation": "記事で言及されている企業の名前はA.L.I.Technologiesです。"
+  },
+  {
+    "question": "A.L.I.Technologiesは何を開発・製造している企業ですか？",
+    "options": [
+      "ドローン",
+      "空飛ぶバイク",
+      "自動運転車",
+      "宇宙ロケット"
+    ],
+    "answer": 1,
+    "explanation": "A.L.I.Technologiesは空飛ぶバイクの開発・製造を手がけています。"
+  },
+  {
+    "question": "A.L.I.Technologiesが開発拠点として借りた施設の場所はどこですか？",
+    "options": [
+      "東京都港区",
+      "山梨県身延町",
+      "大阪府吹田市",
+      "福岡県福岡市"
+    ],
+    "answer": 1,
+    "explanation": "A.L.I.Technologiesが開発拠点として借りた施設の場所は山梨県身延町です。"
+  },
+  {
+    "question": "身延町がA.L.I.Technologiesに求めているものは何ですか？",
+    "options": [
+      "賞金の支払い",
+      "施設の明け渡し",
+      "特許権の譲渡",
+      "株式の売却"
+    ],
+    "answer": 1,
+    "explanation": "身延町がA.L.I.Technologiesに求めているものは施設の明け渡しです。"
+  },
+  {
+    "question": "A.L.I.Technologiesは何年に空飛ぶバイクを発表しましたか？",
+    "options": [
+      "2018年",
+      "2019年",
+      "2020年",
+      "2021年"
+    ],
+    "answer": 3,
+    "explanation": "A.L.I.Technologiesは2021年10月に空飛ぶバイクを発表しました。"
+  }
+]
