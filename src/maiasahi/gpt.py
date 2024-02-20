@@ -10,7 +10,7 @@ from retry import retry
 load_dotenv()
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
-MODEL = "gpt-3.5-turbo-1106"
+MODEL = "gpt-3.5-turbo-0125"
 
 
 @retry(tries=5, delay=2)
