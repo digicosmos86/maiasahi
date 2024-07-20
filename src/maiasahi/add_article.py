@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime
 import json
 import logging
@@ -5,19 +6,16 @@ from pathlib import Path
 import random
 import re
 
+from typing import Any, cast
+
+import aiofiles
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from jinja2 import Environment, PackageLoader
 
 from .asahi import sections, get_links
 from .add_audio import add_audio_from_article
-from .gpt import (
-    paragraph_with_chatgpt,
-    slug_with_chatgpt,
-    vocabulary_with_chatgpt,
-    grammar_with_chatgpt,
-    quiz_with_chatgpt,
-)
+from .chatgpt import annotate_article
 
 logger = logging.getLogger("maiasahi")
 logger.setLevel(logging.INFO)
@@ -40,9 +38,9 @@ def get_free_articles() -> list[str]:
     figure element with class 'c-icon c-icon--keyGold'. Returns the href value of the
     first a element within a div with class 'c-articleModule' inside the found div.
 
-    Returns:
-        str: href value if a suitable element is found.
-        None: if no such element can be found.
+    Returns
+    -------
+        list[str]: href value if a suitable element is found.
     """
     response = requests.get(URL, timeout=500)
     response.raise_for_status()  # Raises a HTTPError for bad responses (4xx and 5xx)
@@ -89,7 +87,7 @@ def extract_articles(urls: list[str]) -> dict[str, str]:
     raise ValueError("Article not found!")
 
 
-def extract_article_content(url: str) -> dict[str, str]:
+def extract_article_content(url: str) -> dict[str, Any]:
     """
     Extracts specific content from a given article webpage.
 
@@ -117,22 +115,25 @@ def extract_article_content(url: str) -> dict[str, str]:
     # Fetch HTML content
     response = requests.get(url, timeout=500)
     if response.status_code != 200:
-        return "Error: Couldn't fetch the URL"
+        raise ValueError("Error: Couldn't fetch the URL")
 
     # Parse HTML content
     soup = BeautifulSoup(response.text, "html.parser")
 
     # Extract title
-    title = soup.find("div", {"class": "y_Qv3"}).find("h1")
-    if title:
-        result["title"] = title.text.strip()
+    title_div = soup.find("div", {"class": "y_Qv3"})
+    if title_div:
+        title = title_div.find("h1")
+        if title:
+            title = cast(Tag, title)
+            result["title"] = title.text.strip()
 
     # Extract figure URL
     figure = soup.find("figure")
     if figure:
-        img = figure.find("img")
+        img = cast(Tag, figure.find("img"))
         if img and "srcset" in img.attrs:
-            result["figure"] = "https:" + img["srcset"]
+            result["figure"] = "https:" + img["srcset"][0]
 
     # Extract caption
     caption = soup.find("figcaption")
@@ -142,32 +143,18 @@ def extract_article_content(url: str) -> dict[str, str]:
     # Extract article content
     div = soup.find("div", {"class": "nfyQp"})
     if div:
+        div = cast(Tag, div)
         p_tags = div.find_all("p")
         article_content = []
         for p in p_tags[:-1]:  # Exclude the last p tag
             article_content.append(p.text)
         result["article"] = "\n\n".join(article_content).replace("\u3000", "")
-        result["article"] = re.sub(r"\n+", "\n\n", result["article"])
+        if result["article"]:
+            result["article"] = re.sub(r"\n+", "\n\n", result["article"])
 
+    if not result:
+        raise ValueError("Error: Couldn't extract content from the URL")
     return result
-
-
-def annotate_by_paragraph(article: str):
-    """Annotate with ChatGPT by paragraph
-
-    Parameters
-    ----------
-    article
-        The article with paragraph separated by "\n\n".
-    """
-    paragraphs = [p.strip() for p in article.split("\n\n")]
-    result = []
-
-    for paragraph in paragraphs:
-        annotated_paragraph = paragraph_with_chatgpt(paragraph)
-        result.append(annotated_paragraph)
-
-    return "\n\n".join(result)
 
 
 def render(content: dict[str, str]) -> str:
@@ -187,7 +174,42 @@ def render(content: dict[str, str]) -> str:
     return template.render(content)
 
 
-def add_article():
+async def save_quiz(quiz: dict, formatted_date: str):
+    """Saves the quiz content to a file.
+
+    Parameters
+    ----------
+    quiz
+        The quiz content.
+    """
+    async with aiofiles.open(
+        quiz_path / f"{formatted_date}.json", "w", encoding="utf-8"
+    ) as f:
+        logger.info("Saving quiz as a json file...")
+        await f.write(json.dumps(quiz, ensure_ascii=False, indent=2))
+
+
+async def save_post(article_content: dict):
+    """Saves the post content to a file.
+
+    Parameters
+    ----------
+    article_md
+        The post content.
+    """
+    formatted_date = article_content["date"]
+    article_md = render(article_content)
+
+    logger.info("Saving article as a post...")
+    post_path = posts_path / f"{formatted_date}.md"
+
+    async with aiofiles.open(post_path, "w", encoding="utf-8") as f:
+        await f.write(article_md)
+
+    logger.info("Post successfully saved at %s", str(posts_path))
+
+
+async def add_article():
     free_article_urls = get_free_articles()
 
     if not free_article_urls:
@@ -212,46 +234,38 @@ def add_article():
     )
 
     article = article_content["article"].replace("\u3000", "")
+    title = article_content["title"]
 
     logger.info("Furigana annotation with ChatGPT")
-    annotated_content = annotate_by_paragraph(article)
-    logger.info("Successfully retrieved annotations from ChatGPT!")
-    logger.info("%s", annotated_content[: min(30, len(annotated_content))])
 
-    slug = slug_with_chatgpt(article_content["title"])
-
-    logger.info("Successfully retrieved slugs!")
-    logger.info(slug)
-
-    article_content["vocabulary"] = vocabulary_with_chatgpt(article)
-    logger.info("Successfully retrieved vocabulary from ChatGPT!")
-
-    article_content["grammar"] = grammar_with_chatgpt(article)
-    logger.info("Successfully retrieved grammar from ChatGPT!")
-
-    quiz = quiz_with_chatgpt(article)
-    logger.info("Successfully retrieved quiz from ChatGPT!")
-
-    article_content["article"] = annotated_content
+    annotation_results = await annotate_article(title, article)
 
     today = datetime.today()
     formatted_date = today.strftime("%Y-%m-%d")
 
-    article_content["date"] = formatted_date
-    article_content["slug"] = slug
-    with open(quiz_path / f"{formatted_date}.json", "w", encoding="utf-8") as f:
-        logger.info("Saving quiz as a json file...")
-        json.dump(quiz, f, ensure_ascii=False, indent=2)
-
-    article_md = render(article_content)
-
-    logger.info("Saving article as a post...")
-    post_path = posts_path / f"{formatted_date}.md"
-
-    with open(post_path, "w", encoding="utf-8") as f:
-        f.write(article_md)
-
-    logger.info("Post successfully saved at %s", str(posts_path))
-
     logger.info("Adding audio to article...")
-    add_audio_from_article(article, formatted_date)
+    await add_audio_from_article(article, formatted_date)
+
+    annotated_article = annotation_results["article"]
+
+    logger.info("Successfully retrieved annotations from ChatGPT!")
+    logger.info("%s", annotated_article[: min(30, len(annotated_article))])
+
+    logger.info("Successfully retrieved slugs!")
+    logger.info(annotation_results["title"])
+
+    logger.info("Successfully retrieved vocabulary from ChatGPT!")
+    logger.info("Successfully retrieved grammar from ChatGPT!")
+    logger.info("Successfully retrieved quiz from ChatGPT!")
+
+    annotation_results["date"] = formatted_date
+    annotation_results["figure"] = article_content["figure"]
+    annotation_results["caption"] = article_content["caption"]
+    annotation_results["link"] = article_content["link"]
+
+    await save_post(annotation_results)
+    await save_quiz(annotation_results["quiz"], formatted_date)
+
+
+def main():
+    asyncio.run(add_article())
