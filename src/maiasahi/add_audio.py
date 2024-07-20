@@ -5,7 +5,7 @@ from .gcloud import gcloud_text_to_speech, names
 
 
 pattern = r"\[Link to the original article\]\((.*?)\)"
-audio_dir = Path(".") / "maiasahi" / "content" / "audio"
+audio_dir = "audio"
 
 
 def add_audio_from_article(article_content: str, save_dir=str) -> None:
@@ -14,14 +14,13 @@ def add_audio_from_article(article_content: str, save_dir=str) -> None:
     Args:
         article_content (str): Article content
     """
-    save_dir = audio_dir / save_dir
-    save_dir.mkdir(exist_ok=True)
+    save_dir = f"{audio_dir}/{save_dir}"
 
     name = random.choice(names)
 
     for idx, para in enumerate(article_content.split("\n\n")):
         print(f"Saving {idx}.mp3")
-        gcloud_text_to_speech(para, save_dir / f"p{idx}.mp3", name=name)
+        gcloud_text_to_speech(para, f"{save_dir}/p{idx}.mp3", name=name)
 
 
 if __name__ == "__main__":
