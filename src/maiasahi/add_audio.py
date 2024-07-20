@@ -1,14 +1,13 @@
-from pathlib import Path
 import random
 
-from .gcloud import gcloud_text_to_speech, names
+from .gcp import gcloud_text_to_speech, names
 
 
 pattern = r"\[Link to the original article\]\((.*?)\)"
 audio_dir = "audio"
 
 
-def add_audio_from_article(article_content: str, save_dir=str) -> None:
+async def add_audio_from_article(article_content: str, save_dir=str) -> None:
     """Add audio from article, using Google Cloud Text-to-Speech
 
     Args:
@@ -20,7 +19,7 @@ def add_audio_from_article(article_content: str, save_dir=str) -> None:
 
     for idx, para in enumerate(article_content.split("\n\n")):
         print(f"Saving {idx}.mp3")
-        gcloud_text_to_speech(para, f"{save_dir}/p{idx}.mp3", name=name)
+        await gcloud_text_to_speech(para, f"{save_dir}/p{idx}.mp3", name=name)
 
 
 if __name__ == "__main__":

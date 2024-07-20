@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from maiasahi.gcloud import gcloud_text_to_speech
+from maiasahi.gcp import gcloud_text_to_speech
 from maiasahi.add_article import render
 
 load_dotenv()
