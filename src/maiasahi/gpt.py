@@ -10,7 +10,7 @@ from retry import retry
 load_dotenv()
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
-MODEL = "gpt-3.5-turbo-0125"
+MODEL = "gpt-4o-mini-2024-07-18"
 
 
 @retry(tries=5, delay=2)
@@ -22,7 +22,7 @@ def paragraph_with_chatgpt(paragraph: str):
 
     prompt = f"Now annotate this paragraph: <p>{paragraph}</p>. Your response should be HTML with matching <ruby> and <rt> tags for all words and phrases."
 
-    completion = openai.ChatCompletion.create(
+    completion = openai.chat.completions.create(
         model=MODEL,
         messages=[
             {"role": "system", "content": system},
@@ -48,7 +48,7 @@ def slug_with_chatgpt(title: str) -> str:
     Translate the above sentence from Japanese into English.
     """
 
-    completion = openai.ChatCompletion.create(
+    completion = openai.chat.completions.create(
         model=MODEL,
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2,
@@ -131,8 +131,10 @@ def vocabulary_with_chatgpt(article: str) -> str:
 <article>
 {article}
 </article>
+
+Your response should be the markdown only. Do not put it in a code block.
     """
-    completion = openai.ChatCompletion.create(
+    completion = openai.chat.completions.create(
         model=MODEL,
         messages=[
             {"role": "system", "content": system},
@@ -170,7 +172,7 @@ def grammar_with_chatgpt(article: str) -> str:
 
     Your response should be the markdown only. Do not put it in a code block.
     """
-    completion = openai.ChatCompletion.create(
+    completion = openai.chat.completions.create(
         model=MODEL,
         messages=[
             {"role": "system", "content": system},
@@ -210,7 +212,7 @@ I want the quiz as an array of JSON objects with the following field:
 
 Your response should be nothing but the array. Do not format your answer in Markdown.
 """
-    completion = openai.ChatCompletion.create(
+    completion = openai.chat.completions.create(
         model=MODEL,
         messages=[
             {"role": "system", "content": system},
