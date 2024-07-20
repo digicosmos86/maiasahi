@@ -4,7 +4,7 @@
 
 {{ range $index, $content := $splitContent }}
     {{ $playButton := printf `
-<span class="player" data-src="../../audio/%s/p%d.mp3">
+<span class="player" data-src="https://storage.googleapis.com/maiasahi-audio/audio/%s/p%d.mp3">
     <button class="play-pause" onclick="togglePlayPause(this)">
         <i class="fas fa-play"></i>
         <!-- Font Awesome Play Icon -->
