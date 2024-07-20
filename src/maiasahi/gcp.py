@@ -1,7 +1,9 @@
 import io
 
+import aiohttp
 from dotenv import load_dotenv
-from google.cloud import texttospeech, storage
+from gcloud.aio.storage import Storage
+from google.cloud import texttospeech
 
 load_dotenv()
 
@@ -9,14 +11,12 @@ names = [f"ja-JP-Neural2-{letter}" for letter in "BCD"]
 
 # Instantiates a client
 t2s_client = texttospeech.TextToSpeechClient()
-storage_client = storage.Client()
-bucket = storage_client.bucket("maiasahi-audio")
 
 # Select the type of audio file you want returned
 audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.MP3)
 
 
-def gcloud_text_to_speech(
+async def gcloud_text_to_speech(
     text: str, output: str, name: str = "ja-JP-Neural2-B"
 ) -> None:
     """Use Google Cloud Text-to-Speech to
@@ -38,12 +38,17 @@ def gcloud_text_to_speech(
         input=synthesis_input, voice=voice, audio_config=audio_config
     )
 
-    blob = bucket.blob(output)
-    blob.upload_from_file(
-        io.BytesIO(response.audio_content), content_type="audio/mpeg"
-    )
+    async with aiohttp.ClientSession() as session:
+        client = Storage(session=session)  # type: ignore
 
-    print(f"Audio content uploaded to maiasahi-audio/{output}")
+        status = await client.upload(
+            bucket="maiasahi-audio",
+            object_name=output,
+            file_data=io.BytesIO(response.audio_content),
+            content_type="audio/mpeg",
+        )
+
+        print(f"Audio content uploaded to maiasahi-audio/{output}")
 
     # The response's audio_content is binary.
     # with open(output, "wb") as out:
