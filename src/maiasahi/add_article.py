@@ -133,7 +133,7 @@ def extract_article_content(url: str) -> dict[str, Any]:
     if figure:
         img = cast(Tag, figure.find("img"))
         if img and "srcset" in img.attrs:
-            result["figure"] = "https:" + img["srcset"][0]
+            result["figure"] = "https:" + img["srcset"]  # type: ignore
 
     # Extract caption
     caption = soup.find("figcaption")

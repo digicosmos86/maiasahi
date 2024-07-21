@@ -1,8 +1,9 @@
 from maiasahi.add_article import (
     get_free_articles,
     extract_articles,
-    markdown_table_linker,
 )
+
+from maiasahi.chatgpt.utils import markdown_table_linker
 
 
 def test_extraction():
