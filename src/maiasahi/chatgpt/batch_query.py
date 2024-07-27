@@ -43,7 +43,7 @@ async def make_batch_request(requests: list[dict]) -> list[dict]:
     )
     batch_id = batch.id
 
-    for _ in range(200):
+    for _ in range(24 * 60 * 60 // 3):
         batch_result = client.batches.retrieve(batch_id=batch_id)
         if batch_result.status == "completed":
             break

@@ -21,14 +21,14 @@ jobs:
 
       # Step 2: Checkout repo recursively
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.11
 
