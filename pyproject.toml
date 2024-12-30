@@ -1,34 +1,38 @@
-[tool.poetry]
+[project]
 name = "maiasahi"
 version = "0.1.0"
 description = "Learn Japanese from daily news with LLM"
-authors = ["Paul Xu <digicosmos@gmail.com>"]
+authors = [
+    { name = "Paul Xu", email = "digicosmos@gmail.com" }
+]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "maiasahi", from = "src" }]
+requires-python = ">=3.11"
+dependencies = [
+    "beautifulsoup4>=4.12.2",
+    "Jinja2>=3.1.2",
+    "requests>=2.31.0",
+    "openai>=1.36.0",
+    "python-dotenv>=1.0.0",
+    "google-cloud-texttospeech>=2.16.4",
+    "google-cloud-storage>=2.17.0",
+    "gcloud-aio-storage>=9.3.0",
+    "types-aiofiles>=24.1.0.20240626",
+    "types-requests>=2.32.0.20240712",
+    "types-beautifulsoup4>=4.12.0.20240511",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-beautifulsoup4 = "^4.12.2"
-Jinja2 = "^3.1.2"
-requests = "^2.31.0"
-openai = "^1.36.0"
-python-dotenv = "^1.0.0"
-google-cloud-texttospeech = "^2.16.4"
-google-cloud-storage = "^2.17.0"
-gcloud-aio-storage = "^9.3.0"
-types-aiofiles = "^24.1.0.20240626"
-types-requests = "^2.32.0.20240712"
-types-beautifulsoup4 = "^4.12.0.20240511"
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.5.3",
+    "pytest>=8.2.2",
+    "ipykernel>=6.29.5",
+    "mypy>=1.11.0",
+    "pytest-asyncio>=0.23.8",
+]
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.5.3"
-pytest = "^8.2.2"
-ipykernel = "^6.29.5"
-mypy = "^1.11.0"
-pytest-asyncio = "^0.23.8"
-
-[tool.poetry.scripts]
+[project.scripts]
 add = "maiasahi:main"
 
 [tool.ruff]
@@ -111,5 +115,5 @@ docstring-code-format = false
 docstring-code-line-length = "dynamic"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
