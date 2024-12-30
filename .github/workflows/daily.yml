@@ -18,11 +18,17 @@ jobs:
       - name: Set OPENAI_API_KEY environment variable
         env:
           OPENAI_API_SECRET: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_VERSION: ${{ secrets.OPENAI_API_VERSION }}
           GCP_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
         run: |
           echo $GCP_CREDENTIALS_JSON > /tmp/credentials.json
           echo "OPENAI_API_KEY=$OPENAI_API_SECRET" >> $GITHUB_ENV
           echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/credentials.json" >> $GITHUB_ENV
+          echo "OPENAI_API_VERSION=$OPENAI_API_VERSION" >> $GITHUB_ENV
+          echo "AZURE_OPENAI_API_KEY=$AZURE_OPENAI_API_KEY" >> $GITHUB_ENV
+          echo "AZURE_OPENAI_ENDPOINT=$AZURE_OPENAI_ENDPOINT" >> $GITHUB_ENV
 
       # Step 2: Checkout repo recursively
       - name: Checkout repository
@@ -44,19 +50,17 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
 
-      - name: Set up Python 3.11
+      - name: Set up Python 3.13
         uses: actions/setup-python@v5
         with:
-          python-version: 3.11
-
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
+          python-version: 3.13
 
       # Step 4: Run poetry command
-      - name: Run poetry command
+      - name: Run add command
         run: |
-          poetry install
-          poetry run add
+          python -m pip install --upgrade pip
+          pip install .[dev]
+          python add_article.py
 
       # Step 5: Build the site and push to GitHub Pages
       - name: Build Hugo Site
