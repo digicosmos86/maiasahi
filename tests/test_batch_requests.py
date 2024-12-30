@@ -27,7 +27,7 @@ def test_create_batch_request():
     assert request["custom_id"] == id
     assert request["method"] == "POST"
     assert request["url"] == "/v1/chat/completions"
-    assert request["body"]["model"] == "gpt-4o-mini-2024-07-18"
+    assert request["body"]["model"] == "gpt-4o-mini-batch"
     assert request["body"]["messages"][0]["role"] == "system"
     assert request["body"]["messages"][0]["content"] == system
     assert request["body"]["messages"][1]["role"] == "user"
@@ -75,7 +75,7 @@ async def test_make_batch_request():
     responses = await make_batch_request(requests)
 
     assert len(responses) == 2
-    assert "annotate-p0" in responses[0]["custom_id"]
+    assert "annotate-p0" in [res["custom_id"] for res in responses]
     assert "<ruby>" in retrieve_content(responses[0])
 
 

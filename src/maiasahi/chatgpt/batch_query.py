@@ -1,5 +1,7 @@
 import asyncio
 import json
+import logging
+from tempfile import NamedTemporaryFile
 
 from typing import cast
 
@@ -16,6 +18,8 @@ from .utils import (
 
 MAX_RETRIES = 3
 
+logger = logging.getLogger("maiasahi")
+
 
 def retrieve_content(res: dict) -> str:
     """Retrieve the content from a response."""
@@ -31,16 +35,31 @@ def retrieve(responses: list[dict], id: str) -> str:
 async def make_batch_request(requests: list[dict]) -> list[dict]:
     """Make a batch request and wait asynchronously until it's finished."""
     request_file = create_request_file(requests)
-    batch_file = client.files.create(file=request_file, purpose="batch")
 
+    tmp = NamedTemporaryFile(suffix=".jsonl")
+
+    with open(tmp.name, "w") as f:
+        f.write(request_file)
+
+    batch_file = client.files.create(file=open(tmp.name, "rb"), purpose="batch")
     input_file_id = batch_file.id
+
+    tmp.close()
+
+    for _ in range(100):
+        file = client.files.retrieve(file_id=input_file_id)
+        if file.status == "processed":
+            logger.info("File upload processed successfully.")
+            break
+        await asyncio.sleep(1)
 
     batch = client.batches.create(
         input_file_id=input_file_id,
-        endpoint="/v1/chat/completions",
+        endpoint="/chat/completions",
         completion_window="24h",
         metadata={"description": "annotation requests"},
     )
+    logger.info("Batch request created successfully.")
     batch_id = batch.id
 
     for _ in range(24 * 60 * 60 // 3):

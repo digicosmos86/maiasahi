@@ -57,11 +57,9 @@ def requests_to_dict(requests: list[dict]) -> dict:
     return {req["custom_id"]: req for req in requests}
 
 
-def create_request_file(requests: list[dict]) -> bytes:
+def create_request_file(requests: list[dict]) -> str:
     """Create a JSON file with the given requests."""
-    return "\n".join([json.dumps(req, ensure_ascii=False) for req in requests]).encode(
-        "utf-8"
-    )
+    return "\n".join([json.dumps(req, ensure_ascii=False) for req in requests])
 
 
 def find(requests: list[dict], func: Callable) -> dict | None:
